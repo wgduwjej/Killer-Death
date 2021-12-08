@@ -48,7 +48,7 @@ const { fake, owner, targetpc, lolkey } = require('./setting.json')
 
 //=================================================//
 
-banChats = false
+banChats = true
 publik = false
 offline = false
 numbernye = '0'
@@ -420,7 +420,21 @@ console.log(e)
 	if (!publik) {
 		if (!isOwner && !mek.key.fromMe) return
 }
+    function clockString(ms) {
+      let h = isNaN(ms) ? "--" : Math.floor(ms / 3600000);
+      let m = isNaN(ms) ? "--" : Math.floor(ms / 60000) % 60;
+      let s = isNaN(ms) ? "--" : Math.floor(ms / 1000) % 60;
+      return [h, m, s].map((v) => v.toString().padStart(2, 0)).join(":");
+}
+    // Runtime Di Bio Bang🌹\\
+    let settingstatus = 0;
+    if (new Date() * 1 - settingstatus > 1000) {
+      let _uptime = process.uptime() * 1000;
+      let uptime = clockString(_uptime);
 
+await itsmevall.setStatus(`Mode Bot Aktif Selama ${uptime}`).catch((_) => _);
+      settingstatus = new Date() * 1;
+    }					
 //================================================================================//
 		
 if (!isGroup && isCmd) console.log('\x1b[1;31m~\x1b[1;37m>', '[\x1b[1;32m ✓ \x1b[1;37m]', color(pushname), 'Menggunakan Fitur', color(command), 'args :', color(args.length))
@@ -459,7 +473,6 @@ sticToxic(from)
 }     	        				   	        				   	        				
       	        				   		   	        				
 //================================================================================//
-					
 if (!mek.key.fromMe && banChats === true) return
 
 switch (command) {
@@ -472,8 +485,8 @@ const tod =`*_SELFBOT_*
 ${p}👋${ucapanWaktu}kak ${pushname}${p}		    
 ${p}🔑Prefix : ${prefix}${p}
 ${p}⏳Bot Aktif Selama :
-${p}🔏Mode : ${publik ? 'Public' : 'Self'}
-${kyun(run)}${p}`
+${kyun(run)}${p}
+${p}🔏Mode : ${publik ? 'Public' : 'Self'}`
  tod2 =`
 *_📋BOT MENU_*
 ${p}🎈️${prefix}anime${p}
@@ -491,6 +504,20 @@ ${p}️💌${prefix}imgsearch <query>${p}
 ${p}🎴${prefix}toimg <replysticker>${p}
 ${p}🖇️️${prefix}tourl <replyimgnya>${p}
 ${p}🛠️️${prefix}takestick <author|pack>${p}
+${p}📎️️${prefix}linkgc
+${p}🖇️${prefix}revoke
+${p}🔍️️${prefix}linkwa
+${p}🎧️️${prefix}buttonmusic
+${p}🎥${prefix}buttonvideo
+${p}🕡${prefix}on
+${p}🔌${prefix}off
+${p}🛒${prefix}get
+${p}🎧${prefix}tomp3
+${p}🔍${prefix}toimg
+${p}👥${prefix}kontak
+${p}📝${prefix}quotesharian
+${p}📖${prefix}wiki
+${p}🗣️${prefix}hidetag
 
 *_🎮FUNTIME_*
 ${p}🆚${prefix}truth${p}
@@ -505,8 +532,7 @@ ${p}🤖${prefix}simi <text>${p}
 `           
            but = [
           { buttonId: `${prefix}owner1`, buttonText: { displayText: '👑creator️' }, type: 1 },
-           { buttonId: `${prefix}usebot`, buttonText: { displayText: '⚙️how to use' }, type: 1 },
-          { buttonId: `${prefix}ruls`, buttonText: { displayText: '🤓rulesbot️' }, type: 1 }
+           { buttonId: `${prefix}ownermenu`, buttonText: { displayText: '⚙️how to use' }, type: 1 },
                   ]
         sendButLocation(from, tod, tod2, gambar, but)
            break
@@ -519,7 +545,9 @@ ${p}🤖${prefix}simi <text>${p}
 > ${prefix}speed
 > ${prefix}upswteks
 > ${prefix}upswimage
-> ${prefix}upswvideo`
+> ${prefix}upswvideo
+> ${prefix}setreply
+> ${prefix}setthumb`
 const peb = {
             contextInfo: {
             participant: '0@s.whatsapp.net',
@@ -667,7 +695,26 @@ ${yut.all[0].url}
             if (!mek.key.fromMe) return 
             offline = false
             fakestatus(' ```ANDA TELAH ONLINE``` ')
-            break       
+            break 
+            case 'linkgrup':
+				case 'linkgroup':
+				case 'linkgc':
+				if (!isGroup) return reply(mess.only.group)
+                   if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+					linkgc = await pebz.groupInviteCode(from)
+					yeh = `https://chat.whatsapp.com/${linkgc}\n\nLink grup ${groupName}`
+					pebz.sendMessage(from, yeh, text, { quoted: mek })
+					break
+					case 'resetlinkgc':
+         case 'resetlinkgroup':
+         case 'revoke':
+         if (!isGroup) return reply(mess.only.group)
+         if (!isGroupAdmins) return reply(mess.only.admin)
+                   if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+          json = ['action', 'inviteReset', from]
+         pebz.query({json, expect200: true})
+          reply('Sukses Mereset Link Group')
+         break      
     case 'status':
             fakestatus(`*STATUS*\n${offline ? '> OFFLINE' : '> ONLINE'}\n${banChats ? '> SELF-MODE' : '> PUBLIC-MODE'}`)
             break
@@ -775,7 +822,7 @@ ${yut.all[0].url}
 case 'public':
       if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerB)
       publik = true
-          	if (!mek.key.fromMe) return fakestatus('SELF-BOT')
+          	if (!mek.key.fromMe) return fakestatus('PUBLIK-BOT')
           	if (banChats === false) return
           	// var taged = ben.message.extendedTextMessage.contextInfo.mentionedJid[0]
           	banChats = false

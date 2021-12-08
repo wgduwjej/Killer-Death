@@ -6,16 +6,13 @@ const {
     GroupSettingChange
 } = require('@adiwajshing/baileys')
 const fs = require('fs')
+const moment = require("moment-timezone")
 const { banner, start, success } = require('./lib/function')
 const { color } = require('./lib/color')
-
-require('./index.js')
-nocache('./index.js', module => console.log(`${module} Telah Di Update✓`))
-
 const starts = async (pebz = new WAConnection()) => {
     pebz.logger.level = 'warn'
     pebz.version = [2, 2143, 8]
-    pebz.browserDescription = [ 'pebzgonz', 'Chrome', '3.0' ]
+    pebz.browserDescription = [ 'Killer Death', 'Chrome', '3.0' ]
     console.log(banner.string)
     pebz.on('qr', () => {
         console.log(color('[','white'), color('!','red'), color(']','white'), color(' Scan bang'))
