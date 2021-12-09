@@ -49,7 +49,7 @@ const { fake, owner, targetpc, lolkey } = require('./setting.json')
 //=================================================//
 
 banChats = true
-publik = true
+publik = false
 offline = false
 numbernye = '0'
 waktu = '-'
@@ -82,40 +82,8 @@ const time2 = moment().tz("Asia/Makassar").format("HH:mm:ss");
 //================================================================================//
 module.exports = pebz = async (pebz, mek) => {	
 
-//+++ bug welcome nya
+//MASIH BETA YA AJG!!
 
-/*pebz.on('group-participants-update', async (chat) => {
-		try {
-			const mdata = await pebz.groupMetadata(chat.jid)
-			console.log(chat)
-			if (chat.action == 'add') {
-				num = chat.participants[0]
-				try {
-					ppimg = await pebz.getProfilePicture(`${chat.participants[0].split('@')[0]}@c.us`)
-				} catch {
-					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
-				}
-				teks = `*Hallo* @${num.split('@')[0]}\nSelamat datang di group *${mdata.subject}*\nJangan rusuh ya\nJangan lupa intro @${num.split('@')[0]} 🗣\nBtw Admin Disini Gay Whehe😂🤭`
-				let buff = await getBuffer(ppimg)
-				pebz.sendMessage(mdata.id, buff, MessageType.image, {caption: teks, contextInfo: {"mentionedJid": [num]}})
-				} else if (chat.action == 'remove') {
-				num = chat.participants[0]
-				try {
-					ppimg = await pebz.getProfilePicture(`${num.split('@')[0]}@c.us`)
-				} catch {
-					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
-				}
-				teks = `*Mau Tau Anak Kintill Gak? Ini👆* @${num.split('@')[0]}\n*fuck this human*`
-				let buff = await getBuffer(ppimg)
-				pebz.sendMessage(mdata.id, buff, MessageType.image, {caption: teks, contextInfo: {"mentionedJid": [num]}})
-			}
-		} catch (e) {
-			console.log('Error : %s', color(e, 'red'))
-		}
-	})*/
-
-//+++++ B U G  I N I
-	
 		
 //================================================================================//
          
@@ -263,7 +231,7 @@ try {
 //================================================================================//
             
            const fkontak = { 
-           key: {fromMe: false,participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: `0@s.whatsapp.net` } : {}) }, message: { 'contactMessage': { 'displayName': `Hallo Kak ${pushname}\n${ucapanWaktu}kak🤭🧡`, 'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:XL;${pushname},;;;\nFN:${pushname},\nitem1.TEL;waid=${sender.split('@')[0]}:${sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`, 'jpegThumbnail': gambar}}}                   	
+           key: {fromMe: false,participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: `0@s.whatsapp.net` } : {}) }, message: { 'contactMessage': { 'displayName': `Hallo Tod ${pushname}\n${ucapanWaktu}Tod🤭🧡`, 'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:XL;${pushname},;;;\nFN:${pushname},\nitem1.TEL;waid=${sender.split('@')[0]}:${sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`, 'jpegThumbnail': gambar}}}                   	
 
 //=================================================//	
  
@@ -482,11 +450,11 @@ switch (command) {
     var p = '```'
     run = process.uptime() 
 const tod =`*_SELFBOT_*		    
-${p}👋${ucapanWaktu}kak ${pushname}${p}		    
+${p}👋${ucapanWaktu}kak ${pushname}${p}
+${p}🔏Mode : ${publik ? 'Public' : 'Self'}		    
 ${p}🔑Prefix : ${prefix}${p}
 ${p}⏳Bot Aktif Selama :
-${kyun(run)}${p}
-${p}🔏Mode : ${publik ? 'Public' : 'Self'}`
+${kyun(run)}${p}`
  tod2 =`
 *_📋BOT MENU_*
 ${p}🎈️${prefix}anime${p}
@@ -519,6 +487,8 @@ ${p}📝${prefix}quotesharian
 ${p}📖${prefix}wiki
 ${p}🗣️${prefix}hidetag
 ${p}🖌️️${prefix}image
+${p}🙌${prefix}kick
+${p}👋️️${prefix}add
 
 *_🎮FUNTIME_*
 ${p}🆚${prefix}truth${p}
@@ -533,7 +503,7 @@ ${p}🤖${prefix}simi <text>${p}
 `           
            but = [
           { buttonId: `${prefix}owner1`, buttonText: { displayText: '👑creator️' }, type: 1 },
-           { buttonId: `${prefix}ownermenu`, buttonText: { displayText: '⚙️how to use' }, type: 1 },
+           { buttonId: `${prefix}ownermenu`, buttonText: { displayText: 'MENU OWNER' }, type: 1 },
                   ]
         sendButLocation(from, tod, tod2, gambar, but)
            break
@@ -597,21 +567,28 @@ const pebz2 = {
            } 
            pebz.sendMessage(from, txt, MessageType.text, pebz2)
            break 
+           case 'add':  
+                    if (!isGroup && !isGroupAdmins && !isBotGroupAdmins) return reply(lang.botNotAdm())
+                if (args.length < 1) return reply('Yang mau di add?')
+					if (args[0].startsWith('08')) return reply('Gunakan kode negara mas')
+					orang = args[0] + '@s.whatsapp.net'
+response = await pebz.groupAdd(from, [orang])
+o = response.participants[0]
+let inv = (Object.values(o))
+if(inv[0].code == 409) return reply('Orang yang anda add sudah ada didalam Group!')
+else if(inv[0].code == 403){
+pebz.sendMessage(from, `User private\n\nMengirim Undangan Group Ke @${q.split('@')[0]}`, MessageType.text, {quoted: mek, contextInfo: {mentionedJid: [orang]}})
+pebz.sendMessage(from, orang, inv[0].invite_code, inv[0].invite_code_exp, groupMetadata.subject , `Salah Satu Admin Mengundang Anda Masuk Ke Sini Silahkan Klik Bergabung Untuk Masuk`)
+}
+					break 
            case 'kick':
-			if (!isGroupAdmins && !isBotGroupAdmins) return reply("Khusus admin");
-				var mentionedd = mek.message.extendedTextMessage.contextInfo.mentionedJid
-					if (mentionedd.length > 1) {
-					teks = ''
-					for (let _ of mentionedd) {
-					teks += `byeee🏃 :\n`
-					teks += `@_.split('@')[0]`
-					}
-					mentions(teks, mentionedd, true)
-					pebz.groupRemove(from, mentionedd)
-					} else {
-					reply('Tag orang yang mau di kick')
-					}
-                break
+if (!isGroup && !isGroupAdmins && !isBotGroupAdmins) return reply(lang.botNotAdm())
+if(!q)return reply(`*Format salah!*\n\n*Example : ${prefix + command} @tag*`)
+if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+yau = q.split('@')[1] + '@s.whatsapp.net'
+pebz.groupRemove(from, [yau])
+reply(`Succses kick target!`)
+break
                        case 'usebot':
 txt = `
 *「 HOW TO USE BOT 」*
@@ -641,35 +618,29 @@ const pebz3 = {
            } 
            pebz.sendMessage(from, txt, MessageType.text, pebz3)
            break  
-   	case 'play':
-        if (args.length < 1) return reply(`Kirim perintah *${prefix}play query`)
-        reply(mess.wait)
-        let yut = await yts(q)
-        yta(yut.videos[0].url)             
-        .then(async(res) => {
-        const { thumb, title, filesizeF, filesize } = res
-        const capti = `𝗬𝗢𝗨𝗧𝗨𝗕𝗘 𝗣𝗟𝗔𝗬🍁
-		     
-•💬 Judul : ${yut.all[0].title}
-•🎥 ID Video : ${yut.all[0].videoId}
-•⏰️ Diupload Pada : ${yut.all[0].ago}
-•👁️️ Views : ${yut.all[0].views}
-•▶️ Durasi : ${yut.all[0].timestamp}
-•📍 Channel : ${yut.all[0].author.name}
-${yut.all[0].url}
-•🔗 Link Channel : ${yut.all[0].author.url}`      
-        ya = await getBuffer(thumb)
-        py =await pebz.prepareMessage(from, ya, image)
-        gbutsan = [{buttonId: `#buttonmusic ${yut.all[0].url}`, buttonText: {displayText: '🎵AUDIO'}, type: 1},{buttonId: `#buttonvideo ${yut.all[0].url}`, buttonText: {displayText: '🎥VIDEO'}, type: 1}]
-        gbuttonan = {
-        imageMessage: py.message.imageMessage,
-        contentText: capti,
-        footerText: 'Silahkan Pilih Jenis File Dibawah Ini☕',
-        buttons: gbutsan,
-        headerType: 4
-}
-        await pebz.sendMessage(from, gbuttonan, MessageType.buttonsMessage)})
-        break                
+           case 'play':
+			if (args.length === 0) return fakestatus(`Kirim perintah *${prefix}play* _Judul lagu yang akan dicari_`)
+            var srch = args.join('')
+            reply(mess.wait)
+    		aramas = await yts(srch);
+    		aramat = aramas.all 
+   			var mulaikah = aramat[0].url							
+                  try {
+                    yts(mulaikah)
+                    .then((res) => {
+                        const { dl_link, thumb, title, filesizeF, filesize } = res
+                        axios.get(`https://tinyurl.com/api-create.php?url=${dl_link}`)
+                        .then(async (a) => {
+                        if (Number(filesize) >= 100000) return sendMediaURL(from, thumb, `*YT MUSIC*\n\n*Title* : ${title}\n*Ext* : MP3\n*Filesize* : ${filesizeF}\n*Link* : ${a.data}\n\n_For the duration of more than the limit is presented in the form of a link_`)
+                        const captions = `*YT MUSIC*\n\n*Title* : ${title}\n*Ext* : MP3\n*Size* : ${filesizeF}\n*Link* : ${a.data}\n\n_Please wait, the media file is being sent it may take a few minutes_`
+                        sendMediaURL(from, thumb, captions)
+                        await sendMediaURL(from, dl_link).catch(() => fakestatus('error'))
+                        })                
+                        })
+                        } catch (err) {
+                        freply(mess.error.api)
+                        }
+                   break  
         case 'buttonmusic':
         if(!q) return reply('linknya?')              
         res = await yta(`${q}`).catch(e => {
@@ -683,7 +654,7 @@ ${yut.all[0].url}
         sendMedia(from, `${res.dl_link}`,'Nih Kack')
         break                      
     case 'linkwa':
-            if(!q) return reply('cari group apa?')
+            if(!q) return fakestatus('cari group apa?')
             hx.linkwa(q)
             .then(result => {
             let res = '*「 _LINK WA_ 」*\n\n'
@@ -720,17 +691,7 @@ ${yut.all[0].url}
 					linkgc = await pebz.groupInviteCode(from)
 					yeh = `https://chat.whatsapp.com/${linkgc}\n\nLink grup ${groupName}`
 					pebz.sendMessage(from, yeh, text, { quoted: mek })
-					break
-					case 'resetlinkgc':
-         case 'resetlinkgroup':
-         case 'revoke':
-         if (!isGroup) return reply(mess.only.group)
-         if (!isGroupAdmins) return reply(mess.only.admin)
-                   if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-          json = ['action', 'inviteReset', from]
-         pebz.query({json, expect200: true})
-          reply('Sukses Mereset Link Group')
-         break      
+					break		
     case 'status':
             fakestatus(`*STATUS*\n${offline ? '> OFFLINE' : '> ONLINE'}\n${banChats ? '> SELF-MODE' : '> PUBLIC-MODE'}`)
             break
@@ -835,25 +796,25 @@ ${yut.all[0].url}
             fakestatus('reply videonya!')
             }
             break
-case 'public':
-      if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerB)
-      publik = true
-          	if (!mek.key.fromMe) return fakestatus('PUBLIK-BOT')
+  break
+				case 'public':
+				if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerB)
+			publik = true
+if (!mek.key.fromMe) return fakestatus('PUBLIK-BOT')
           	if (banChats === false) return
           	// var taged = ben.message.extendedTextMessage.contextInfo.mentionedJid[0]
           	banChats = false
           	fakestatus(`「 *PUBLIC-MODE* 」`)
-          	break
-	case 'self':
-	  if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerB)
-	  publik = false
-          	if (!mek.key.fromMe) return fakestatus('SELF-BOT')
-          	if (banChats === true) return
-          	uptime = process.uptime()
-         	 // var taged = ben.message.extendedTextMessage.contextInfo.mentionedJid[0]
-         	banChats = true
+			break
+			case 'self':
+			if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerB)
+				publik = false
+			if (!mek.key.fromMe) return fakestatus('PUBLIK-BOT')
+          	if (banChats === false) return
+          	// var taged = ben.message.extendedTextMessage.contextInfo.mentionedJid[0]
+          	banChats = false
           	fakestatus(`「 *SELF-MODE* 」`)
-          	break
+			break
     case 'sticker': 
     case 'stiker':
     case 'sg':
