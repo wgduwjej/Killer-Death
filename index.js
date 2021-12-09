@@ -49,7 +49,7 @@ const { fake, owner, targetpc, lolkey } = require('./setting.json')
 //=================================================//
 
 banChats = true
-publik = false
+publik = true
 offline = false
 numbernye = '0'
 waktu = '-'
