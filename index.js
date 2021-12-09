@@ -518,7 +518,7 @@ ${p}👥${prefix}kontak
 ${p}📝${prefix}quotesharian
 ${p}📖${prefix}wiki
 ${p}🗣️${prefix}hidetag
-
+${p}🧹${prefix}kick
 *_🎮FUNTIME_*
 ${p}🆚${prefix}truth${p}
 ${p}🆚${prefix}dare${p}
