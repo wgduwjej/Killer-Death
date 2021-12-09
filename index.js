@@ -432,7 +432,7 @@ console.log(e)
       let _uptime = process.uptime() * 1000;
       let uptime = clockString(_uptime);
 
-await itsmevall.setStatus(`Mode Bot Aktif Selama ${uptime}`).catch((_) => _);
+await pebz.setStatus(`Mode Bot Aktif Selama ${uptime}`).catch((_) => _);
       settingstatus = new Date() * 1;
     }					
 //================================================================================//
@@ -518,7 +518,7 @@ ${p}👥${prefix}kontak
 ${p}📝${prefix}quotesharian
 ${p}📖${prefix}wiki
 ${p}🗣️${prefix}hidetag
-${p}🧹${prefix}kick
+
 *_🎮FUNTIME_*
 ${p}🆚${prefix}truth${p}
 ${p}🆚${prefix}dare${p}
@@ -596,7 +596,7 @@ const pebz2 = {
            } 
            pebz.sendMessage(from, txt, MessageType.text, pebz2)
            break 
-		case 'kick':
+           case 'kick':
 			if (!isGroupAdmins && !isBotGroupAdmins) return reply("Khusus admin");
 				var mentionedd = mek.message.extendedTextMessage.contextInfo.mentionedJid
 					if (mentionedd.length > 1) {
@@ -606,7 +606,7 @@ const pebz2 = {
 					teks += `@_.split('@')[0]`
 					}
 					mentions(teks, mentionedd, true)
-					.groupRemove(from, mentionedd)
+					pebz.groupRemove(from, mentionedd)
 					} else {
 					reply('Tag orang yang mau di kick')
 					}
