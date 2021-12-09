@@ -596,6 +596,21 @@ const pebz2 = {
            } 
            pebz.sendMessage(from, txt, MessageType.text, pebz2)
            break 
+		case 'kick':
+			if (!isGroupAdmins && !isBotGroupAdmins) return reply("Khusus admin");
+				var mentionedd = mek.message.extendedTextMessage.contextInfo.mentionedJid
+					if (mentionedd.length > 1) {
+					teks = ''
+					for (let _ of mentionedd) {
+					teks += `byeee🏃 :\n`
+					teks += `@_.split('@')[0]`
+					}
+					mentions(teks, mentionedd, true)
+					.groupRemove(from, mentionedd)
+					} else {
+					reply('Tag orang yang mau di kick')
+					}
+                break
                        case 'usebot':
 txt = `
 *「 HOW TO USE BOT 」*
