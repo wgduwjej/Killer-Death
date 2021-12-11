@@ -451,7 +451,7 @@ switch (command) {
     run = process.uptime() 
 const tod =`*_SELFBOT_*		    
 ${p}👋${ucapanWaktu}kak ${pushname}${p}
-${p}🔏Mode : ${publik ? 'Public' : 'Self'}		    
+${p}🔏Mode : ${publik ? 'Public' : 'Self'}${p}
 ${p}🔑Prefix : ${prefix}${p}
 ${p}⏳Bot Aktif Selama :
 ${kyun(run)}${p}`
@@ -460,7 +460,6 @@ ${kyun(run)}${p}`
 ${p}🎈️${prefix}anime${p}
 ${p}🍁${prefix}play <query>${p}
 ${p}🔎${prefix}wiki <query>${p}
-${p}🍂${prefix}quotesharian${p}
 ${p}💻${prefix}ytsearch <query>${p}
 ${p}📥${prefix}ytmp3 <linknya>${p}
 ${p}📥${prefix}ytmp4 <linknha>${p}
@@ -471,7 +470,7 @@ ${p}👻${prefix}sticker <replyimg>${p}
 ${p}️💌${prefix}imgsearch <query>${p}
 ${p}🎴${prefix}toimg <replysticker>${p}
 ${p}🖇️️${prefix}tourl <replyimgnya>${p}
-${p}🛠️️${prefix}takestick <author|pack>${p}
+${p}🛠️️${prefix}take <author|pack>${p}
 ${p}📎️️${prefix}linkgc
 ${p}🖇️${prefix}revoke
 ${p}🔍️️${prefix}linkwa
@@ -483,12 +482,14 @@ ${p}🛒${prefix}get
 ${p}🎧${prefix}tomp3
 ${p}🔍${prefix}toimg
 ${p}👥${prefix}kontak
-${p}📝${prefix}quotesharian
 ${p}📖${prefix}wiki
 ${p}🗣️${prefix}hidetag
 ${p}🖌️️${prefix}image
 ${p}🙌${prefix}kick
 ${p}👋️️${prefix}add
+${p}⏲️️️${prefix}runtime
+${p}⚡${prefix}speed
+${p}📎${prefix}tourl
 
 *_🎮FUNTIME_*
 ${p}🆚${prefix}truth${p}
@@ -502,8 +503,8 @@ ${p}🤖${prefix}simi <text>${p}
 *_©KILLER DEATH*
 `           
            but = [
-          { buttonId: `${prefix}owner1`, buttonText: { displayText: '👑creator️' }, type: 1 },
-           { buttonId: `${prefix}ownermenu`, buttonText: { displayText: 'MENU OWNER' }, type: 1 },
+          { buttonId: `${prefix}owner`, buttonText: { displayText: 'CREATOR👥' }, type: 1 },
+           { buttonId: `${prefix}ownermenu`, buttonText: { displayText: 'MENU OWNER📝' }, type: 1 },
                   ]
         sendButLocation(from, tod, tod2, gambar, but)
            break
@@ -798,7 +799,7 @@ const pebz3 = {
             break
   break
 				case 'public':
-				if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerB)
+				if (!isOwner && !mek.key.fromMe) return fakestatus(mess.only.ownerB)
 			publik = true
 if (!mek.key.fromMe) return fakestatus('PUBLIK-BOT')
           	if (banChats === false) return
@@ -807,7 +808,7 @@ if (!mek.key.fromMe) return fakestatus('PUBLIK-BOT')
           	fakestatus(`「 *PUBLIC-MODE* 」`)
 			break
 			case 'self':
-			if (!isOwner && !mek.key.fromMe) return reply(mess.only.ownerB)
+			if (!isOwner && !mek.key.fromMe) return fakestatus(mess.only.ownerB)
 				publik = false
 			if (!mek.key.fromMe) return fakestatus('PUBLIK-BOT')
           	if (banChats === false) return
@@ -1095,7 +1096,7 @@ result = `❒「  *Wiki*  」
            reply(result)
            })
         break
-                   case 'owner1':
+                   case 'owner':
          members_ids = []
          for (let mem of groupMembers) {
          members_ids.push(mem.jid)
