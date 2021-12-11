@@ -1,6 +1,6 @@
 {
   "name": "SelfBot",
-  "version": "12.1.0",
+  "version": "1.0.0",
   "description": "WhatsApp bot",
   "main": "main.js",
   "directories": {
