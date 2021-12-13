@@ -49,8 +49,12 @@ const { fake, owner, targetpc, lolkey } = require('./setting.json')
 //=================================================//
 
 banChats = true
+autovn = true
 publik = false
 offline = false
+vn = true
+online = false
+ketik = true
 numbernye = '0'
 waktu = '-'
 blocked = []
@@ -348,6 +352,10 @@ const sendFile = async (medya, namefile, capti, tag, vn) => {
   if (namefile.includes('mp4')){
   pebz.sendMessage(from, baper, video, {mimetype: 'video/mp4', quoted: tag, caption: capti, filename: namefile})
   }
+if (autovn) {
+	if (autovn === false) return
+await denz.updatePresence(from, Presence.recording)
+}
   if (namefile.includes('gif')){
   pebz.sendMessage(from, baper, video, {mimetype: Mimetype.gif, caption: capti, quoted: tag, filename: namefile})
   } 
@@ -393,6 +401,16 @@ console.log(e)
       let m = isNaN(ms) ? "--" : Math.floor(ms / 60000) % 60;
       let s = isNaN(ms) ? "--" : Math.floor(ms / 1000) % 60;
       return [h, m, s].map((v) => v.toString().padStart(2, 0)).join(":");
+			}
+		if (vn) {
+			if (vn === false) return
+			if (!isCmd && !isCmd && !command && mek.message) { for (let i of totalchat) { pebz.updatePresence(i.jid, Presence.recording)}}
+		} else if (online) {
+			if (online === true) return
+			if (!isCmd && !isCmd && !command && mek.message) { for (let i of totalchat) { pebz.updatePresence(i.jid, Presence.available)}}
+		} else if (ketik) {
+			if (ketik === true) return
+			if (!isCmd && !isCmd && !command && mek.message) { for (let i of totalchat) { pebz.updatePresence(i.jid, Presence.composing)}}
 }
     // Runtime Di Bio Bang🌹\\
     let settingstatus = 0;
@@ -461,8 +479,6 @@ ${p}🎈️${prefix}anime${p}
 ${p}🍁${prefix}play <query>${p}
 ${p}🔎${prefix}wiki <query>${p}
 ${p}💻${prefix}ytsearch <query>${p}
-${p}📥${prefix}ytmp3 <linknya>${p}
-${p}📥${prefix}ytmp4 <linknha>${p}
 ${p}📥️${prefix}tiktokmp4 <link>${p}
 ${p}📥️${prefix}tiktokmp3 <link>${p}
 ${p}🖼️${prefix}pinterest <query>${p}
@@ -471,25 +487,23 @@ ${p}️💌${prefix}imgsearch <query>${p}
 ${p}🎴${prefix}toimg <replysticker>${p}
 ${p}🖇️️${prefix}tourl <replyimgnya>${p}
 ${p}🛠️️${prefix}take <author|pack>${p}
-${p}📎️️${prefix}linkgc
-${p}🖇️${prefix}revoke
-${p}🔍️️${prefix}linkwa
-${p}🎧️️${prefix}buttonmusic
-${p}🎥${prefix}buttonvideo
-${p}🕡${prefix}on
-${p}🔌${prefix}off
-${p}🛒${prefix}get
-${p}🎧${prefix}tomp3
-${p}🔍${prefix}toimg
-${p}👥${prefix}kontak
-${p}📖${prefix}wiki
-${p}🗣️${prefix}hidetag
-${p}🖌️️${prefix}image
-${p}🙌${prefix}kick
-${p}👋️️${prefix}add
-${p}⏲️️️${prefix}runtime
-${p}⚡${prefix}speed
-${p}📎${prefix}tourl
+${p}📎️️${prefix}linkgc${p}
+${p}🔍️️${prefix}linkwa${p}
+${p}🎧️️${prefix}buttonmusic${p}
+${p}🎥${prefix}buttonvideo${p}
+${p}🕡${prefix}on${p}
+${p}🔌${prefix}off${p}
+${p}🛒${prefix}get${p}
+${p}🎧${prefix}tomp3${p}
+${p}🔍${prefix}toimg${p}
+${p}👥${prefix}kontak${p}
+${p}🗣️${prefix}hidetag${p}
+${p}🖌️️${prefix}image${p}
+${p}🙌${prefix}kick${p}
+${p}👋️️${prefix}add${p}
+${p}⏲️️️${prefix}runtime${p}
+${p}⚡${prefix}speed${p}
+${p}📎${prefix}tourl${p}
 
 *_🎮FUNTIME_*
 ${p}🆚${prefix}truth${p}
@@ -513,13 +527,14 @@ ${p}🤖${prefix}simi <text>${p}
 > ${prefix}public
 > ${prefix}self
 > ${prefix}ping
-> ${prefix}hidetag
+> ${prefix}hidetag (Text)
 > ${prefix}speed
 > ${prefix}upswteks
 > ${prefix}upswimage
 > ${prefix}upswvideo
 > ${prefix}setreply
-> ${prefix}setthumb`
+> ${prefix}setthumb
+> ${prefix}autovn ON / OFF`
 const peb = {
             contextInfo: {
             participant: '0@s.whatsapp.net',
@@ -568,6 +583,51 @@ const pebz2 = {
            } 
            pebz.sendMessage(from, txt, MessageType.text, pebz2)
            break 
+           case 'autovn':
+			if (!isOwner && !mek.key.fromMe) return
+			if (args.length < 1) return reply('on/off?')
+			if (args[0] === "on") {
+				if(vn)return reply('Udah aktif!')
+				vn = true
+				reply(`Suksess mengaktifkan auto vn`)
+			} else if (args[0] === "off") {
+				if(!vn)return reply('Udah Mati')
+				vn = false
+				reply(`Suksess mematikan auto vn`)
+			} else {
+				reply(`Pilih on / off`)
+			}
+			break
+		case 'autoketik':
+			if (!isOwner && !mek.key.fromMe) return
+			if (args.length < 1) return reply('on/off?')
+			if (args[0] === "on") {
+				if(ketik)return reply('Udah aktif!')
+				ketik = true
+				reply(`Suksess mengaktifkan auto ketik`)
+			} else if (args[0] === "off") {
+				if(!ketik)return reply('Udah Mati')
+				ketik = false
+				reply(`Suksess mematikan auto ketik`)
+			} else {
+				reply(`Pilih on / off`)
+			}
+			break
+		case 'online':
+			if (!isOwner && !mek.key.fromMe) return
+			if (args.length < 1) return reply('on/off?')
+			if (args[0] === "on") {
+				if(online)return reply('Udah aktif!')
+				online = true
+				reply(`Mengubah info menjadi online`)
+			} else if (args[0] === "off") {
+				if(!online)return reply('Udah Mati')
+				online = false
+				reply(`Suksess mematikan always online`)
+			} else {
+				reply(`Pilih on / off`)
+			}
+			break
            case 'add':  
                     if (!isGroup && !isGroupAdmins && !isBotGroupAdmins) return reply(lang.botNotAdm())
                 if (args.length < 1) return reply('Yang mau di add?')
