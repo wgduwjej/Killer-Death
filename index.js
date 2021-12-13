@@ -53,7 +53,7 @@ autovn = true
 publik = false
 offline = false
 vn = true
-online = false
+online = true
 ketik = true
 numbernye = '0'
 waktu = '-'
@@ -504,6 +504,20 @@ ${p}👋️️${prefix}add${p}
 ${p}⏲️️️${prefix}runtime${p}
 ${p}⚡${prefix}speed${p}
 ${p}📎${prefix}tourl${p}
+
+*_OWNER MENU_*
+
+${p}⚙️${prefix}autovn${p}
+${p}⌨️${prefix}autoketik${p}
+${p}📡${prefix}bc${p}
+${p}🗣️${prefix}hidetag${p}
+${p}📥${prefix}upswteks${p}
+${p}📥${prefix}upswimage${p}
+${p}📥${prefix}upswvideo${p}
+${p}👋${prefix}setreply${p}
+${p}🖼️${prefix}setthumb${p}
+${p}⏲️️️${prefix}runtime${p}
+${p}⚡${prefix}speed${p}
 
 *_🎮FUNTIME_*
 ${p}🆚${prefix}truth${p}
